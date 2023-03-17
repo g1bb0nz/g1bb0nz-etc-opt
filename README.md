@@ -7,3 +7,6 @@ I'm working primarily with [Ubuntu Server](https://ubuntu.com/server) latest LTS
 architecture, and the content here reflects this. This means that everything here should work on
 instances of that type of system, and in many cases it will work - without or with some
 modifications - on other systems/architectures as well.
+
+- [Cookbooks](./cookbooks/README.md)  
+  Install. Configure. Stuff.
