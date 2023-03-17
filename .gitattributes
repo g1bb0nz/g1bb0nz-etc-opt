@@ -3,3 +3,6 @@
 
 # site
 *.md eol=lf
+
+# resource
+*.yaml eol=lf

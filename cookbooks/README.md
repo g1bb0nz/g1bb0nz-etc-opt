@@ -5,3 +5,6 @@ steps of installation and configuration of tools I come across in the so-called 
 
 Every cookbook contains information readily available in their corresponding project's public
 documentation, it's just a distilled, shortened, tried and opinionated version of it.
+
+- [Oh My Posh](./oh-my-posh.md)  
+  A blazing fast cross platform/shell prompt renderer
