@@ -9,4 +9,6 @@ instances of that type of system, and in many cases it will work - without or wi
 modifications - on other systems/architectures as well.
 
 - [Cookbooks](./cookbooks/README.md)  
-  Install. Configure. Stuff.
+  Install. Configure. Stuff
+- `g1bb0nz.omp.yaml`  
+  My [Oh My Posh](./cookbooks/oh-my-posh.md) theme
