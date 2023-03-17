@@ -1,0 +1,5 @@
+.git* eol=lf
+/UNLICENSE eol=lf
+
+# site
+*.md eol=lf
