@@ -36,10 +36,10 @@ blocks:
         background: "#2f2f2f"
         template: "\u2800{{.UpstreamIcon}} {{.HEAD}} {{.BranchStatus}}{{if .Working.Changed}} \uf044 <lightRed>{{.Working.String}}</>{{end}}{{if and (.Working.Changed) (.Staging.Changed)}} |{{end}}{{if .Staging.Changed}} \uf046 <lightGreen>{{.Staging.String}}</>{{end}}{{if lt 0 .StashCount}} \uf0c7 {{.StashCount}}{{end}}{{if lt 0 .WorktreeCount}} \uf1bb {{.WorktreeCount}}{{end}} "
         properties:
-          fetch_status: true
           fetch_stash_count: true
-          fetch_worktree_count: true
+          fetch_status: true
           fetch_upstream_icon: true
+          fetch_worktree_count: true
   # 1st line right
   - type: prompt
     alignment: right
@@ -51,8 +51,8 @@ blocks:
         background: yellow
         template: "\u2800{{if .Env.JAVA_HOME}}\ue738 {{if .Error}}{{.Error}}{{else}}{{path .Full .Env.JAVA_HOME}}{{end}}{{end}}"
         properties:
-          home_enabled: true
           display_mode: always
+          home_enabled: true
       - type: docker
         style: powerline
         powerline_symbol: "\ue0c6"
