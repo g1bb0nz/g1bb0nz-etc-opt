@@ -36,16 +36,16 @@ Requires `jq` package for determining latest version by parsing GitHub API outpu
   sudo --shell <<'EOF'
   [ "v$(/opt/bin/oh-my-posh version)" != "$(curl --header 'Accept: application/json' --silent https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/latest | jq --raw-output '.name')" ] && \
   curl --location --output /opt/bin/oh-my-posh https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 && \
-  chmod +x /opt/bin/oh-my-posh && \
-  /opt/bin/oh-my-posh version --verbose
+  chmod +x /opt/bin/oh-my-posh
   EOF
+  /opt/bin/oh-my-posh version --verbose
   ```
 - Current user  
   Upgrade `oh-my-posh` binary in `~/.local/bin` directory, if it is older than latest.
   ```shell
   [ "v$("$HOME"/.local/bin/oh-my-posh version)" != "$(curl --header 'Accept: application/json' --silent https://api.github.com/repos/JanDeDobbeleer/oh-my-posh/releases/latest | jq --raw-output '.name')" ] && \
   curl --location --output "$HOME"/.local/bin/oh-my-posh https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 && \
-  chmod +x "$HOME"/.local/bin/oh-my-posh && \
+  chmod +x "$HOME"/.local/bin/oh-my-posh
   "$HOME"/.local/bin/oh-my-posh version --verbose
   ```
 
