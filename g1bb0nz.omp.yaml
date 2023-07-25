@@ -98,8 +98,9 @@ blocks:
       - type: executiontime
         style: plain
         template: "\u2800<red>\ue0c3</>  \uf253 {{.FormattedMs}} <red>\ue0c1</> "
-      - type: exit
+      - type: status
         style: plain
-        template: "\u2800\uf08b {{if eq 0 .Code}}<green>\uf00c</>{{else}}<red>\uf06a {{.Meaning}}</>{{end}} "
+        template: "\u2800\uf08b {{if .Error}}<red>\uf06a{{else}}<green>\uf00c{{end}}</> {{.String}} "
         properties:
           always_enabled: true
+          status_template: "{{.Code}}{{if ne .Code 0}} (<red>{{reason .Code}}</>){{end}}"
