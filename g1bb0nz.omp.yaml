@@ -11,7 +11,7 @@ blocks:
         style: powerline
         powerline_symbol: "\ue0c6"
         background: darkGray
-        template: "\u2800{{if .Root}}<red>\uf234{{else if .SSHSession}}<green>\uf2c0{{else}}<green>\uf007{{end}} <b>{{.UserName}}</b></>@{{.HostName}}"
+        template: "\u2800{{if .Root}}<red>\uf234{{else if .SSHSession}}<green>\uf2c0{{else}}<green>\uf007{{end}} <b>{{.UserName}}</b></>@{{.HostName}} "
       - type: os
         style: powerline
         powerline_symbol: "\ue0c6"
