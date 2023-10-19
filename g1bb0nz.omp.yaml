@@ -113,7 +113,7 @@ blocks:
         templates:
           - "\u2800\uf08b\u2800"
           - "{{if .Error}}<red>\uf06a{{else}}<green>\uf00c{{end}}"
-          - "\u2800</>{{.String}}\u2800"
+          - "\u2800</>{{.String}}"
         properties:
           always_enabled: true
-          status_template: "{{.Code}}{{if ne .Code 0}}\u2800(<red>{{reason .Code}}</>){{end}}"
+          status_template: "{{.Code}}{{if and (ne .Code 0) (ne .Code (reason .Code))}}\u2800(<red>{{reason .Code}}</>){{end}}"
