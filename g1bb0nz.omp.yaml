@@ -116,4 +116,4 @@ blocks:
           - "\u2800</>{{.String}}"
         properties:
           always_enabled: true
-          status_template: "{{.Code}}{{if and (ne .Code 0) (ne (strconv.Itoa .Code) (reason .Code))}}\u2800(<red>{{reason .Code}}</>){{end}}"
+          status_template: "{{.Code}}{{if and (ne .Code 0) (ne (printf \"%d\" .Code) (reason .Code))}}\u2800(<red>{{reason .Code}}</>){{end}}"
