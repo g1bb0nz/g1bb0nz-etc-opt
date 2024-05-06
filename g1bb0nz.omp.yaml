@@ -2,6 +2,9 @@
 version: 2
 console_title_template: "{{if .Root}}# {{end}}{{.UserName}}@{{.HostName}}: {{.Folder}}"
 final_space: true
+disable_cursor_positioning: true
+patch_pwsh_bleed: true
+disable_notice: true
 blocks:
   # 1st line left
   - type: prompt
