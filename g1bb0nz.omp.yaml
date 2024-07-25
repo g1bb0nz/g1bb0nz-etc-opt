@@ -92,7 +92,7 @@ blocks:
         background: yellow
         templates:
           - "\ue73c\u2800"
-          - "{{if .Error}}{{.Error}}{{else}}{{if .Venv}}{{.Venv}}\u2800{{end}}{{.Full}}{{end}}"
+          - "{{if .Error}}{{.Error}}{{else}}{{if .Venv}}{{.Venv}}\u2800{{end}}{{url .Full .URL}}{{end}}"
         properties:
           home_enabled: true
       - type: shell
