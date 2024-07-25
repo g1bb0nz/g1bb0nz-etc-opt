@@ -65,9 +65,7 @@ blocks:
         powerline_symbol: "\ue0bc"
         foreground: transparent
         background: yellow
-        templates:
-          - "\ue674\u2800"
-          - "{{if .Error}}{{.Error}}{{else}}{{url .Full .URL}}{{end}}"
+        template: "{{if .Error}}{{.Error}}{{else}}\ue674\u2800{{url .Full .URL}}{{end}}"
         properties:
           home_enabled: true
       - type: java
@@ -75,7 +73,7 @@ blocks:
         powerline_symbol: "\ue0bc"
         foreground: transparent
         background: yellow
-        template: "{{if .Env.JAVA_HOME}}\ue738\u2800{{if .Error}}{{.Error}}{{else}}{{path .Full .Env.JAVA_HOME}}{{end}}{{end}}"
+        template: "{{if .Env.JAVA_HOME}}{{if .Error}}{{.Error}}{{else}}\ue738\u2800{{path .Full .Env.JAVA_HOME}}{{end}}{{end}}"
         properties:
           display_mode: always
           home_enabled: true
@@ -90,9 +88,7 @@ blocks:
         powerline_symbol: "\ue0bc"
         foreground: transparent
         background: yellow
-        templates:
-          - "\ue73c\u2800"
-          - "{{if .Error}}{{.Error}}{{else}}{{if .Venv}}{{.Venv}}\u2800{{end}}{{url .Full .URL}}{{end}}"
+        template: "{{if .Error}}{{.Error}}{{else}}\ue73c\u2800{{if .Venv}}{{.Venv}}\u2800{{end}}{{url .Full .URL}}{{end}}"
         properties:
           home_enabled: true
       - type: shell
