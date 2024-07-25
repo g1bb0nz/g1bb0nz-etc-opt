@@ -60,6 +60,17 @@ blocks:
   - type: prompt
     alignment: right
     segments:
+      - type: mvn
+        style: powerline
+        powerline_symbol: "\ue0bc"
+        foreground: transparent
+        background: yellow
+        templates:
+          - "\ue674\u2800"
+          - "{{if .Error}}{{.Error}}{{else}}{{url .Full .URL}}{{end}}"
+        properties:
+          display_mode: always
+          home_enabled: true
       - type: java
         style: powerline
         powerline_symbol: "\ue0bc"
