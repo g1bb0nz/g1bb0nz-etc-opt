@@ -69,7 +69,6 @@ blocks:
           - "\ue674\u2800"
           - "{{if .Error}}{{.Error}}{{else}}{{url .Full .URL}}{{end}}"
         properties:
-          display_mode: always
           home_enabled: true
       - type: java
         style: powerline
