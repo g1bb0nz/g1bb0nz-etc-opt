@@ -1,10 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
-version: 2
+version: 3
 final_space: true
 shell_integration: true
-disable_cursor_positioning: true
+upgrade_notice: true
 patch_pwsh_bleed: true
-disable_notice: true
 console_title_template: "{{if .Root}}# {{end}}{{.UserName}}@{{.HostName}}: {{.Folder}}"
 blocks:
   # 1st line left
@@ -15,19 +14,13 @@ blocks:
         style: powerline
         powerline_symbol: "\ue0c6"
         background: darkGray
-        templates:
-          - "\u2800"
-          - "{{if .Root}}<red>\uf234{{else if .SSHSession}}<green>\uf2c0{{else}}<green>\uf007{{end}}"
-          - "\u2800<b>{{.UserName}}</b></>@{{.HostName}}\u2800"
+        template: "\u2800{{if .Root}}<red>\uf234{{else if .SSHSession}}<green>\uf2c0{{else}}<green>\uf007{{end}}\u2800<b>{{.UserName}}</b></>@{{.HostName}}\u2800"
       - type: os
         style: powerline
         powerline_symbol: "\ue0c6"
         foreground: transparent
         background: blue
-        templates:
-          - "\u2800"
-          - "{{if .WSL}}\ue62a\u2800/{{end}}"
-          - "{{.Icon}}\u2800"
+        template: "\u2800{{if .WSL}}\ue62a\u2800/{{end}}{{.Icon}}\u2800"
       - type: path
         style: powerline
         powerline_symbol: "\ue0bc"
@@ -44,13 +37,7 @@ blocks:
           - "{{if lt 0 .Behind}}lightCyan{{end}}"
           - "{{if lt 0 .Ahead}}lightMagenta{{end}}"
         background: "#2f2f2f"
-        templates:
-          - "{{.UpstreamIcon}}{{.HEAD}}\u2800{{.BranchStatus}}"
-          - "{{if .Working.Changed}}\u2800\uf044\u2800<lightRed>{{.Working.String}}</>{{end}}"
-          - "{{if and (.Working.Changed) (.Staging.Changed)}}\u2800|{{end}}"
-          - "{{if .Staging.Changed}}\u2800\uf046\u2800<lightGreen>{{.Staging.String}}</>{{end}}"
-          - "{{if lt 0 .StashCount}}\u2800\uf0c7\u2800{{.StashCount}}{{end}}"
-          - "{{if lt 0 .WorktreeCount}}\u2800\uf1bb\u2800{{.WorktreeCount}}{{end}}"
+        template: "{{.UpstreamIcon}}{{.HEAD}}\u2800{{.BranchStatus}}{{if .Working.Changed}}\u2800\uf044\u2800<lightRed>{{.Working.String}}</>{{end}}{{if and (.Working.Changed) (.Staging.Changed)}}\u2800|{{end}}{{if .Staging.Changed}}\u2800\uf046\u2800<lightGreen>{{.Staging.String}}</>{{end}}{{if lt 0 .StashCount}}\u2800\uf0c7\u2800{{.StashCount}}{{end}}{{if lt 0 .WorktreeCount}}\u2800\uf1bb\u2800{{.WorktreeCount}}{{end}}"
         properties:
           fetch_stash_count: true
           fetch_status: true
@@ -109,9 +96,7 @@ blocks:
     segments:
       - type: text
         style: plain
-        templates:
-          - "{{if .Root}}<red>#{{else}}<green>${{end}}"
-          - "</>"
+        template: "{{if .Root}}<red>#{{else}}<green>${{end}}</>"
   # 2nd line right
   - type: rprompt
     segments:
@@ -120,10 +105,7 @@ blocks:
         template: "\u2800<red>\ue0c3\u2800</>\u2800\uf253\u2800{{.FormattedMs}}\u2800<red>\ue0c1\u2800</>"
       - type: status
         style: plain
-        templates:
-          - "\u2800\uf08b\u2800"
-          - "{{if .Error}}<red>\uf06a{{else}}<green>\uf00c{{end}}"
-          - "\u2800</>{{.String}}"
+        template: \u2800\uf08b\u2800{{if .Error}}<red>\uf06a{{else}}<green>\uf00c{{end}}\u2800</>{{.String}}"
         properties:
           always_enabled: true
           status_template: "{{.Code}}{{if and (ne .Code 0) (ne (printf \"%d\" .Code) (reason .Code))}}\u2800(<red>{{reason .Code}}</>){{end}}"
