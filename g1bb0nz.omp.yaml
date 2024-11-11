@@ -56,6 +56,7 @@ blocks:
         properties:
           home_enabled: true
           cache_duration: none
+        cache: { duration: none }
       - type: java
         style: powerline
         powerline_symbol: "\ue0bc"
@@ -66,14 +67,13 @@ blocks:
           display_mode: always
           home_enabled: true
           cache_duration: none
+        cache: { duration: none }
       - type: docker
         style: powerline
         powerline_symbol: "\ue0bc"
         foreground: transparent
         background: yellow
         template: "\ue7b0\u2800{{.Context}}"
-        properties:
-          cache_duration: none
       - type: python
         style: powerline
         powerline_symbol: "\ue0bc"
@@ -83,6 +83,7 @@ blocks:
         properties:
           home_enabled: true
           cache_duration: none
+        cache: { duration: none }
       - type: shell
         style: powerline
         powerline_symbol: "\ue0bc"
