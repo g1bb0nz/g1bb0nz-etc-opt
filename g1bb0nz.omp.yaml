@@ -2,9 +2,11 @@
 version: 3
 final_space: true
 shell_integration: true
-upgrade_notice: true
 patch_pwsh_bleed: true
-console_title_template: "{{if .Root}}# {{end}}{{.UserName}}@{{.HostName}}: {{.Folder}}"
+console_title_template: "{{if .Root}}# {{end}}{{.UserName}}@{{.HostName}}:{{.Folder}}"
+palette:
+  colorA: "#2f2f2f"
+  colorB: "#3d3d3d"
 blocks:
   # 1st line left
   - type: prompt
@@ -12,21 +14,21 @@ blocks:
     segments:
       - type: session
         style: powerline
-        powerline_symbol: "\ue0c6"
+        leading_powerline_symbol: "\ue0ba"
         background: darkGray
-        template: "\u2800{{if .Root}}<red>\uf234{{else if .SSHSession}}<green>\uf2c0{{else}}<green>\uf007{{end}}\u2800<b>{{.UserName}}</b></>@{{.HostName}}\u2800"
+        template: "{{if .Root}}<red>\uf234{{else if .SSHSession}}<green>\uf2c0{{else}}<green>\uf007{{end}} <b>{{.UserName}}</b></>@{{.HostName}}"
       - type: os
         style: powerline
-        powerline_symbol: "\ue0c6"
-        foreground: transparent
+        powerline_symbol: "\ue0bc"
+        foreground: black
         background: blue
-        template: "\u2800{{if .WSL}}\ue62a\u2800/{{end}}{{.Icon}}\u2800"
+        template: "{{if .WSL}}\ue62a {{end}}{{.Icon}} "
       - type: path
         style: powerline
         powerline_symbol: "\ue0bc"
-        foreground: transparent
+        foreground: black
         background: yellow
-        template: "\uf07b\u2800{{path .Path .Location}}"
+        template: "\uf07b {{path .Path .Location}}"
         properties:
           style: agnoster_full
       - type: git
@@ -36,8 +38,8 @@ blocks:
           - "{{if or (.Working.Changed) (.Staging.Changed)}}lightYellow{{end}}"
           - "{{if lt 0 .Behind}}lightCyan{{end}}"
           - "{{if lt 0 .Ahead}}lightMagenta{{end}}"
-        background: "#2f2f2f"
-        template: "{{.UpstreamIcon}}{{.HEAD}}\u2800{{.BranchStatus}}{{if .Working.Changed}}\u2800\uf044\u2800<lightRed>{{.Working.String}}</>{{end}}{{if and (.Working.Changed) (.Staging.Changed)}}\u2800|{{end}}{{if .Staging.Changed}}\u2800\uf046\u2800<lightGreen>{{.Staging.String}}</>{{end}}{{if lt 0 .StashCount}}\u2800\uf0c7\u2800{{.StashCount}}{{end}}{{if lt 0 .WorktreeCount}}\u2800\uf1bb\u2800{{.WorktreeCount}}{{end}}"
+        background: p:colorA
+        template: "{{.UpstreamIcon}}{{.HEAD}} {{.BranchStatus}}{{if .Working.Changed}} \uf044 <lightRed>{{.Working.String}}</>{{end}}{{if and (.Working.Changed) (.Staging.Changed)}} |{{end}}{{if .Staging.Changed}} \uf046 <lightGreen>{{.Staging.String}}</>{{end}}{{if lt 0 .StashCount}} \uf0c7 {{.StashCount}}{{end}}{{if lt 0 .WorktreeCount}} \uf1bb {{.WorktreeCount}}{{end}}"
         properties:
           fetch_stash_count: true
           fetch_status: true
@@ -46,55 +48,65 @@ blocks:
   # 1st line right
   - type: prompt
     alignment: right
+    overflow: hide
     segments:
       - type: mvn
-        style: powerline
-        powerline_symbol: "\ue0bc"
-        foreground: transparent
-        background: yellow
-        template: "{{if .Error}}{{.Error}}{{else}}\ue674\u2800{{url .Full .URL}}{{end}}"
+        style: accordion
+        leading_powerline_symbol: "\ue0ba"
+        foreground: default
+        background: p:colorB
+        template: "{{if .Error}}{{.Error}}{{else}}<#f79a24>\ue674</> mvn {{url .Full .URL}}{{end}}"
         properties:
           home_enabled: true
           cache_duration: none
         cache: { duration: none }
       - type: java
-        style: powerline
+        style: accordion
         powerline_symbol: "\ue0bc"
-        foreground: transparent
-        background: yellow
-        template: "{{if .Env.JAVA_HOME}}{{if .Error}}{{.Error}}{{else}}\ue738\u2800{{path .Full .Env.JAVA_HOME}}{{end}}{{end}}"
+        foreground: default
+        background: p:colorA
+        template: "{{if .Env.JAVA_HOME}}{{if .Error}}{{.Error}}{{else}}<#5283a2>\ue738</> jdk {{path .Full .Env.JAVA_HOME}}{{end}}{{end}}"
         properties:
           display_mode: always
           home_enabled: true
           cache_duration: none
         cache: { duration: none }
       - type: docker
-        style: powerline
+        style: accordion
         powerline_symbol: "\ue0bc"
-        foreground: transparent
-        background: yellow
-        template: "\ue7b0\u2800{{.Context}}"
+        foreground: default
+        background: p:colorB
+        template: "<#1d63ed>\ue7b0</> docker[<lightRed>{{.Context}}</>]"
       - type: python
-        style: powerline
+        style: accordion
         powerline_symbol: "\ue0bc"
-        foreground: transparent
-        background: yellow
-        template: "{{if .Error}}{{.Error}}{{else}}\ue73c\u2800{{if .Venv}}{{.Venv}}\u2800{{end}}{{url .Full .URL}}{{end}}"
+        foreground: default
+        background: p:colorA
+        template: "{{if .Error}}{{.Error}}{{else}}<#f7c639>\ue73c</> py{{if .Venv}}[<lightGreen>{{.Venv}}</>]{{end}} {{url .Full .URL}}{{end}}"
         properties:
           home_enabled: true
           cache_duration: none
         cache: { duration: none }
+      - type: upgrade
+        style: powerline
+        powerline_symbol: "\ue0bc"
+        foreground: default
+        background: p:colorB
+        template: "<white>\ue795</> omp {{.Current}} <lightGreen>\uf021 {{.Latest}}</>"
+        properties:
+          cache_duration: 12h
+        cache: { duration: 12h }
       - type: shell
         style: powerline
         powerline_symbol: "\ue0bc"
-        foreground: transparent
+        foreground: black
         background: blue
-        template: "\uf120\u2800{{.Name}}\u2800{{.Version}}"
+        template: "\ue795 {{.Name}}"
       - type: time
         style: powerline
-        powerline_symbol: "\ue0c6"
+        powerline_symbol: "\ue0bc"
         background: darkGray
-        template: "\u2800\uf017\u2800{{.CurrentDate | date .Format}}"
+        template: "\uf017 {{.CurrentDate | date .Format}}"
   # 2nd line left
   - type: prompt
     newline: true
@@ -108,10 +120,10 @@ blocks:
     segments:
       - type: executiontime
         style: plain
-        template: "\u2800<red>\ue0c3\u2800</>\u2800\uf253\u2800{{.FormattedMs}}\u2800<red>\ue0c1\u2800</>"
+        template: " <red>\ue0c3 </> \uf253 {{.FormattedMs}} <red>\ue0c1 </>"
       - type: status
         style: plain
-        template: "\u2800\uf08b\u2800{{if .Error}}<red>\uf06a{{else}}<green>\uf00c{{end}}\u2800</>{{.String}}"
+        template: " \uf08b {{if .Error}}<red>\uf06a{{else}}<green>\uf00c{{end}}</> {{.String}}"
         properties:
           always_enabled: true
-          status_template: "{{.Code}}{{if and (ne .Code 0) (ne (printf \"%d\" .Code) (reason .Code))}}\u2800(<red>{{reason .Code}}</>){{end}}"
+          status_template: "{{.Code}}{{if and (ne .Code 0) (ne (printf \"%d\" .Code) (reason .Code))}} (<red>{{reason .Code}}</>){{end}}"
