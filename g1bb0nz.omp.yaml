@@ -22,7 +22,9 @@ blocks:
         powerline_symbol: "\ue0bc"
         foreground: black
         background: blue
-        template: "{{if .WSL}}\ue62a {{end}}{{.Icon}} "
+        template: "{{if .WSL}}\ue8e5 {{end}}{{.Icon}} "
+        properties:
+          windows: "\ue8e5"
       - type: path
         style: powerline
         powerline_symbol: "\ue0bc"
