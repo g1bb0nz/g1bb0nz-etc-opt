@@ -57,7 +57,7 @@ blocks:
         leading_powerline_symbol: "\ue0ba"
         foreground: default
         background: p:colorB
-        template: "{{if .Error}}{{.Error}}{{else}}<#f79a24>\ue674</> mvn {{url .Full .URL}}{{end}}"
+        template: "{{if .Error}}{{.Error}}{{else}}<#f79a24>\ue82c</> mvn {{url .Full .URL}}{{end}}"
         properties:
           home_enabled: true
       - type: java
