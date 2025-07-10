@@ -60,8 +60,6 @@ blocks:
         template: "{{if .Error}}{{.Error}}{{else}}<#f79a24>\ue674</> mvn {{url .Full .URL}}{{end}}"
         properties:
           home_enabled: true
-          cache_duration: none
-        cache: { duration: none }
       - type: java
         style: accordion
         powerline_symbol: "\ue0bc"
@@ -71,8 +69,6 @@ blocks:
         properties:
           display_mode: always
           home_enabled: true
-          cache_duration: none
-        cache: { duration: none }
       - type: docker
         style: accordion
         powerline_symbol: "\ue0bc"
@@ -87,8 +83,6 @@ blocks:
         template: "{{if .Error}}{{.Error}}{{else}}<#f7c639>\ue73c</> py{{if .Venv}}[<lightGreen>{{.Venv}}</>]{{end}} {{url .Full .URL}}{{end}}"
         properties:
           home_enabled: true
-          cache_duration: none
-        cache: { duration: none }
       - type: upgrade
         style: powerline
         powerline_symbol: "\ue0bc"
@@ -96,8 +90,6 @@ blocks:
         background: p:colorB
         template: "<white>\ue795</> omp {{.Current}} <lightGreen>\uf021 {{.Latest}}</>"
         properties:
-          cache_duration: 12h
-        cache: { duration: 12h }
       - type: shell
         style: powerline
         powerline_symbol: "\ue0bc"
