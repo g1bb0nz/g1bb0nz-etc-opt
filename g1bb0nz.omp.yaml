@@ -107,7 +107,7 @@ blocks:
         style: accordion
         leading_powerline_symbol: 
         foreground: default
-        background: p:colorB
+        background: p:colorA
         template: |-
           {{ if not .Error -}}
             <#f79a24></> mvn {{ url .Full .URL }}
@@ -127,7 +127,7 @@ blocks:
         style: accordion
         powerline_symbol: 
         foreground: default
-        background: p:colorA
+        background: p:colorB
         template: |-
           {{ if not .Error -}}
             <#5283a2> </>
@@ -144,8 +144,22 @@ blocks:
         style: accordion
         powerline_symbol: 
         foreground: default
-        background: p:colorB
+        background: p:colorA
         template: <#1d63ed></> docker[<lightRed> {{- .Context -}} </>]
+      - type: node
+        properties:
+          display_mode: always
+          home_enabled: true
+        style: accordion
+        powerline_symbol: 
+        foreground: default
+        background: p:colorB
+        template: |-
+          {{ if not .Error -}}
+            <#539e43></> node {{ url .Full .URL }}
+          {{- else if ne .Error "NO VERSION" -}}
+            {{ .Error }}
+          {{- end }}
       - type: python
         properties:
           display_mode: always
