@@ -1,12 +1,21 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 version: 3
-final_space: true
 shell_integration: true
 patch_pwsh_bleed: true
-console_title_template: "{{if .Root}}# {{end}}{{.UserName}}@{{.HostName}}:{{.Folder}}"
+final_space: true
+console_title_template: |-
+  {{ if .Root -}}
+    # {{- " " }}
+  {{- end -}}
+  {{ .UserName -}} @ {{- .HostName -}} :
+  {{- if eq .PWD "~" -}}
+    ~
+  {{- else -}}
+    {{ .Folder }}
+  {{- end }}
 palette:
-  colorA: "#2f2f2f"
-  colorB: "#3d3d3d"
+  colorA: '#2f2f2f'
+  colorB: '#3d3d3d'
 blocks:
   # 1st line left
   - type: prompt
@@ -14,93 +23,167 @@ blocks:
     segments:
       - type: session
         style: powerline
-        leading_powerline_symbol: "\ue0ba"
+        leading_powerline_symbol: 
         background: darkGray
-        template: "{{if .Root}}<red>\uf234{{else if .SSHSession}}<green>\uf2c0{{else}}<green>\uf007{{end}} <b>{{.UserName}}</b></>@{{.HostName}}"
+        template: |-
+          {{ if .Root -}}
+            <red>
+          {{- else if .SSHSession -}}
+            <green>
+          {{- else -}}
+            <green>
+          {{- end -}}
+          {{ " " -}} <b> {{- .UserName -}} </b></>@ {{- .HostName }}
+        cache: { strategy: session, duration: 168h }
       - type: os
+        properties:
+          windows: 
         style: powerline
-        powerline_symbol: "\ue0bc"
+        powerline_symbol: 
         foreground: black
         background: blue
-        template: "{{if .WSL}}\ue8e5 {{end}}{{.Icon}} "
-        properties:
-          windows: "\ue8e5"
+        template: |-
+          {{ if .WSL -}}
+             {{- " " }}
+          {{- end -}}
+          {{ .Icon }} {{- " " }}
+        cache: { strategy: session, duration: 168h }
       - type: path
-        style: powerline
-        powerline_symbol: "\ue0bc"
-        foreground: black
-        background: yellow
-        template: "\uf07b {{path .Path .Location}}"
         properties:
           style: agnoster_full
-      - type: git
         style: powerline
-        powerline_symbol: "\ue0bc"
-        foreground_templates:
-          - "{{if or (.Working.Changed) (.Staging.Changed)}}lightYellow{{end}}"
-          - "{{if lt 0 .Behind}}lightCyan{{end}}"
-          - "{{if lt 0 .Ahead}}lightMagenta{{end}}"
-        background: p:colorA
-        template: "{{.UpstreamIcon}}{{.HEAD}} {{.BranchStatus}}{{if .Working.Changed}} \uf044 <lightRed>{{.Working.String}}</>{{end}}{{if and (.Working.Changed) (.Staging.Changed)}} |{{end}}{{if .Staging.Changed}} \uf046 <lightGreen>{{.Staging.String}}</>{{end}}{{if lt 0 .StashCount}} \uf0c7 {{.StashCount}}{{end}}{{if lt 0 .WorktreeCount}} \uf1bb {{.WorktreeCount}}{{end}}"
+        powerline_symbol: 
+        foreground: black
+        background: yellow
+        template:  {{ path .Path .Location }}
+      - type: git
         properties:
           fetch_stash_count: true
           fetch_status: true
           fetch_upstream_icon: true
           fetch_worktree_count: true
+        style: powerline
+        powerline_symbol: 
+        foreground_templates:
+          - |-
+            {{ if or .Working.Changed .Staging.Changed -}}
+              lightYellow
+            {{- end }}
+          - |-
+            {{ if lt 0 .Behind -}}
+              lightCyan
+            {{- end }}
+          - |-
+            {{ if lt 0 .Ahead -}}
+              lightMagenta
+            {{- end }}
+        background: p:colorA
+        template: |-
+          {{ .UpstreamIcon }} {{ .HEAD }} {{ .BranchStatus }}
+          {{- if .Working.Changed -}}
+            {{ " " -}}  <lightRed> {{- .Working.String -}} </>
+          {{- end }}
+          {{- if and .Working.Changed .Staging.Changed -}}
+            {{ " " -}} |
+          {{- end }}
+          {{- if .Staging.Changed -}}
+            {{ " " -}}  <lightGreen> {{- .Staging.String -}} </>
+          {{- end }}
+          {{- if lt 0 .StashCount -}}
+            {{ " " -}}  {{ .StashCount }}
+          {{- end }}
+          {{- if lt 0 .WorktreeCount -}}
+            {{ " " -}}  {{ .WorktreeCount }}
+          {{- end }}
   # 1st line right
   - type: prompt
     alignment: right
     overflow: hide
     segments:
       - type: mvn
-        style: accordion
-        leading_powerline_symbol: "\ue0ba"
-        foreground: default
-        background: p:colorB
-        template: "{{if .Error}}{{.Error}}{{else}}<#f79a24>\ue82c</> mvn {{url .Full .URL}}{{end}}"
-        properties:
-          home_enabled: true
-      - type: java
-        style: accordion
-        powerline_symbol: "\ue0bc"
-        foreground: default
-        background: p:colorA
-        template: "{{if .Env.JAVA_HOME}}{{if .Error}}{{.Error}}{{else}}<#5283a2>\ue738</> jdk {{path .Full .Env.JAVA_HOME}}{{end}}{{end}}"
         properties:
           display_mode: always
           home_enabled: true
-      - type: docker
         style: accordion
-        powerline_symbol: "\ue0bc"
+        leading_powerline_symbol: 
         foreground: default
         background: p:colorB
-        template: "<#1d63ed>\ue7b0</> docker[<lightRed>{{.Context}}</>]"
-      - type: python
+        template: |-
+          {{ if not .Error -}}
+            <#f79a24></> mvn {{ url .Full .URL }}
+          {{- else if ne .Error "NO VERSION" -}}
+            {{ .Error }}
+          {{- end }}
+      - type: java
+        properties:
+          display_mode: always
+          home_enabled: true
+          version_url_template: |-
+            {{ if lt 1 .Major -}}
+              https://www.oracle.com/java/technologies/javase/ {{- .Full -}} -relnotes.html
+            {{- else -}}
+              https://www.oracle.com/java/technologies/javase/ {{- .Minor -}} u-relnotes.html
+            {{- end }}
         style: accordion
-        powerline_symbol: "\ue0bc"
+        powerline_symbol: 
         foreground: default
         background: p:colorA
-        template: "{{if .Error}}{{.Error}}{{else}}<#f7c639>\ue73c</> py{{if .Venv}}[<lightGreen>{{.Venv}}</>]{{end}} {{url .Full .URL}}{{end}}"
-        properties:
-          home_enabled: true
-      - type: upgrade
-        style: powerline
-        powerline_symbol: "\ue0bc"
+        template: |-
+          {{ if not .Error -}}
+            <#5283a2> </>
+            {{- if .Env.JAVA_HOME -}}
+              {{ path "jdk" .Env.JAVA_HOME }}
+            {{- else -}}
+              jdk
+            {{- end -}}
+            {{ " " -}} {{ url .Full .URL }}
+          {{- else if ne .Error "NO VERSION" -}}
+            {{ .Error }}
+          {{- end }}
+      - type: docker
+        style: accordion
+        powerline_symbol: 
         foreground: default
         background: p:colorB
-        template: "<white>\ue795</> omp {{.Current}} <lightGreen>\uf021 {{.Latest}}</>"
+        template: <#1d63ed></> docker[<lightRed> {{- .Context -}} </>]
+      - type: python
         properties:
+          display_mode: always
+          home_enabled: true
+        style: accordion
+        powerline_symbol: 
+        foreground: default
+        background: p:colorA
+        template: |-
+          {{ if not .Error -}}
+            <#f7c639></> py
+          {{- if .Venv -}}
+            [<lightGreen> {{- .Venv -}} </>]
+          {{- end -}}
+          {{ " " -}} {{ url .Full .URL }}
+          {{- else if ne .Error "NO VERSION" -}}
+            {{ .Error }}
+          {{- end }}
+      - type: upgrade
+        properties:
+          cache_duration: 12h
+        style: powerline
+        powerline_symbol: 
+        foreground: default
+        background: p:colorB
+        template: <white></> omp {{ .Current }} <lightGreen> {{ .Latest -}} </>
       - type: shell
         style: powerline
-        powerline_symbol: "\ue0bc"
+        powerline_symbol: 
         foreground: black
         background: blue
-        template: "\ue795 {{.Name}}"
+        template:  {{ .Name }}
+        cache: { strategy: session, duration: 168h }
       - type: time
         style: powerline
-        powerline_symbol: "\ue0bc"
+        powerline_symbol: 
         background: darkGray
-        template: "\uf017 {{.CurrentDate | date .Format}}"
+        template:  {{ .CurrentDate | date .Format }}
   # 2nd line left
   - type: prompt
     newline: true
@@ -108,16 +191,29 @@ blocks:
     segments:
       - type: text
         style: plain
-        template: "{{if .Root}}<red>#{{else}}<green>${{end}}</>"
+        template: |-
+          {{ if .Root -}}
+            <red>#
+          {{- else -}}
+            <green>$
+          {{- end -}}
+          </>
+        cache: { strategy: session, duration: 168h }
   # 2nd line right
   - type: rprompt
     segments:
       - type: executiontime
         style: plain
-        template: " <red>\ue0c3 </> \uf253 {{.FormattedMs}} <red>\ue0c1 </>"
+        template: <red> </>  {{ .FormattedMs }} <red> </> {{- " " }}
       - type: status
-        style: plain
-        template: " \uf08b {{if .Error}}<red>\uf06a{{else}}<green>\uf00c{{end}}</> {{.String}}"
         properties:
           always_enabled: true
-          status_template: "{{.Code}}{{if and (ne .Code 0) (ne (printf \"%d\" .Code) (reason .Code))}} (<red>{{reason .Code}}</>){{end}}"
+        style: plain
+        template: |-
+           {{- " " }}
+          {{- if .Error -}}
+            <red>
+          {{- else -}}
+            <green>
+          {{- end -}}
+          </> {{ .String }}
