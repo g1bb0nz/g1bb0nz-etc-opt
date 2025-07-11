@@ -119,8 +119,8 @@ blocks:
           display_mode: always
           home_enabled: true
           version_url_template: |-
-            {{ if lt 1 .Major -}}
-              https://www.oracle.com/java/technologies/javase/ {{- .Full -}} -relnotes.html
+            {{ if lt 1 (.Major | int) -}}
+              https://www.oracle.com/java/technologies/javase/ {{- .Full | replace "." "-" -}} -relnotes.html
             {{- else -}}
               https://www.oracle.com/java/technologies/javase/ {{- .Minor -}} u-relnotes.html
             {{- end }}
