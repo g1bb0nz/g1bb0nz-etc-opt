@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
-version: 3
+version: 4
 shell_integration: true
 patch_pwsh_bleed: true
 final_space: true
@@ -36,7 +36,7 @@ blocks:
           {{ " " -}} <b> {{- .UserName -}} </b></>@ {{- .HostName }}
         cache: { strategy: session, duration: 168h }
       - type: os
-        properties:
+        options:
           windows: 
         style: powerline
         powerline_symbol: 
@@ -49,7 +49,7 @@ blocks:
           {{ .Icon }} {{- " " }}
         cache: { strategy: session, duration: 168h }
       - type: path
-        properties:
+        options:
           style: agnoster_full
         style: powerline
         powerline_symbol: 
@@ -57,7 +57,7 @@ blocks:
         background: yellow
         template:  {{ path .Path .Location }}
       - type: git
-        properties:
+        options:
           fetch_stash_count: true
           fetch_status: true
           fetch_upstream_icon: true
@@ -101,7 +101,7 @@ blocks:
     overflow: hide
     segments:
       - type: mvn
-        properties:
+        options:
           display_mode: always
           home_enabled: true
         style: accordion
@@ -115,7 +115,7 @@ blocks:
             {{ .Error }}
           {{- end }}
       - type: java
-        properties:
+        options:
           display_mode: always
           home_enabled: true
           version_url_template: |-
@@ -147,7 +147,7 @@ blocks:
         background: p:colorA
         template: <#1d63ed></> docker[<lightRed> {{- .Context -}} </>]
       - type: node
-        properties:
+        options:
           display_mode: always
           home_enabled: true
         style: accordion
@@ -161,7 +161,7 @@ blocks:
             {{ .Error }}
           {{- end }}
       - type: python
-        properties:
+        options:
           display_mode: always
           home_enabled: true
         style: accordion
@@ -179,7 +179,7 @@ blocks:
             {{ .Error }}
           {{- end }}
       - type: upgrade
-        properties:
+        options:
           cache_duration: 12h
         style: powerline
         powerline_symbol: 
@@ -220,7 +220,7 @@ blocks:
         style: plain
         template: <red> </>  {{ .FormattedMs }} <red> </> {{- " " }}
       - type: status
-        properties:
+        options:
           always_enabled: true
         style: plain
         template: |-
