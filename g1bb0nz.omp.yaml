@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 version: 4
 shell_integration: true
+enable_cursor_positioning: true
 patch_pwsh_bleed: true
 final_space: true
 console_title_template: |-
