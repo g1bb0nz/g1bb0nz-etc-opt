@@ -141,11 +141,20 @@ blocks:
             {{ .Error }}
           {{- end }}
       - type: docker
+        options:
+          display_mode: environment
         style: accordion
         powerline_symbol: 
         foreground: default
         background: p:colorA
-        template: <#1d63ed></> docker[<lightRed> {{- .Context -}} </>]
+        template: |-
+            <#1d63ed></> docker<
+            {{- if eq .Context "default" -}}
+              <lightGreen>
+            {{- else -}}
+              <lightRed>
+            {{- end -}}
+            {{ .Context }}</>> [{{ len .Containers }}]
       - type: node
         options:
           display_mode: always
@@ -172,7 +181,7 @@ blocks:
           {{ if not .Error -}}
             <#f7c639></> py
           {{- if .Venv -}}
-            [<lightGreen> {{- .Venv -}} </>]
+            <<lightGreen> {{- .Venv -}} </>>
           {{- end -}}
           {{ " " -}} {{ url .Full .URL }}
           {{- else if ne .Error "NO VERSION" -}}
